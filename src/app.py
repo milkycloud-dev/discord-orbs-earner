@@ -294,8 +294,7 @@ def main(page: ft.Page):
         value="RU",
         width=120,
         bgcolor="#1E1F22",
-        border_color="#1E1F22",
-        on_change=change_lang
+        border_color="#1E1F22"
     )
     lang_dd.on_change = change_lang
     
