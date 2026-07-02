@@ -1,0 +1,7 @@
+No module named 'PyQt6'
+Traceback (most recent call last):
+  File "C:\Users\user\Desktop\DCQuestCompleter-v1.0.0\src\app.py", line 13, in <module>
+    from PyQt6.QtWidgets import (QApplication, QMainWindow, QWidget, QVBoxLayout,
+                                 QHBoxLayout, QLabel, QPushButton, QListWidget, QListWidgetItem,
+                                 QLineEdit, QAbstractItemView, QMessageBox)
+ModuleNotFoundError: No module named 'PyQt6'

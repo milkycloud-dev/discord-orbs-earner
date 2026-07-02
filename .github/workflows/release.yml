@@ -1,0 +1,77 @@
+name: Release 2.0
+
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - main
+      - master
+
+permissions:
+  contents: write
+
+jobs:
+  build:
+    strategy:
+      matrix:
+        os: [ubuntu-latest, windows-latest]
+    runs-on: ${{ matrix.os }}
+    
+    steps:
+    - uses: actions/checkout@v4
+    
+    - name: Set up Python
+      uses: actions/setup-python@v4
+      with:
+        python-version: '3.11'
+        
+    - name: Install dependencies
+      run: |
+        python -m pip install --upgrade pip
+        pip install -r requirements.txt
+        pip install pyinstaller
+        
+    - name: Build with PyInstaller (Windows)
+      if: matrix.os == 'windows-latest'
+      run: pyinstaller --noconfirm --onedir --windowed --add-data "src/runner.exe;." --add-data "icon.png;." --icon "icon.png" --name "DiscordOrbsEarner" src/app.py
+        
+    - name: Build with PyInstaller (Linux)
+      if: matrix.os == 'ubuntu-latest'
+      run: pyinstaller --noconfirm --onedir --windowed --add-data "src/runner.exe:." --add-data "icon.png:." --name "DiscordOrbsEarner" src/app.py
+        
+    - name: Zip Artifacts (Windows)
+      if: matrix.os == 'windows-latest'
+      run: Compress-Archive -Path dist/DiscordOrbsEarner/* -DestinationPath DiscordOrbsEarner-Windows.zip
+        
+    - name: Zip Artifacts (Linux)
+      if: matrix.os == 'ubuntu-latest'
+      run: |
+        cd dist/DiscordOrbsEarner
+        zip -r ../../DiscordOrbsEarner-Linux.zip .
+        
+    - name: Upload Artifact
+      uses: actions/upload-artifact@v4
+      with:
+        name: build-${{ matrix.os }}
+        path: DiscordOrbsEarner-*.zip
+
+  release:
+    needs: build
+    runs-on: ubuntu-latest
+    steps:
+    - name: Download all artifacts
+      uses: actions/download-artifact@v4
+      with:
+        path: artifacts
+        merge-multiple: true
+        
+    - name: Create Release
+      uses: softprops/action-gh-release@v2
+      with:
+        tag_name: v2.0
+        name: Release 2.0
+        draft: false
+        prerelease: false
+        files: artifacts/*.zip
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

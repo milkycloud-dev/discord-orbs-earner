@@ -1,0 +1,5 @@
+flet
+rich
+requests
+Pillow
+pyinstaller
