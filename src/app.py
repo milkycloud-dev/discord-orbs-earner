@@ -268,20 +268,23 @@ def main(page: ft.Page):
 
     # Change Language
     def change_lang(e):
-        lang_val = e.control.value.lower()
-        t.set_lang(lang_val)
-        log("log_lang_change", lang_val.upper())
-        page.title = t.get("title")
-        title_text.value = t.get("title")
-        search_field.hint_text = t.get("filter")
-        btn_reload.tooltip = t.get("reload")
-        status_text.value = t.get("ready", len(all_games)) if all_games else t.get("fetch")
-        lbl_active_games.value = t.get("active_games")
-        lbl_system_log.value = t.get("system_log")
-        render_games()
-        render_active_games()
-        render_logs()
-        page.update()
+        try:
+            lang_val = e.control.value.lower()
+            t.set_lang(lang_val)
+            log("log_lang_change", lang_val.upper())
+            page.title = t.get("title")
+            title_text.value = t.get("title")
+            search_field.hint_text = t.get("filter")
+            btn_reload.tooltip = t.get("reload")
+            status_text.value = t.get("ready", len(all_games)) if all_games else t.get("fetch")
+            lbl_active_games.value = t.get("active_games")
+            lbl_system_log.value = t.get("system_log")
+            render_games()
+            render_active_games()
+            render_logs()
+            page.update()
+        except Exception as ex:
+            log("log_spoof_fail_err", "Lang Switch", str(ex))
 
     # --- Layout Assembly ---
     btn_reload = ft.IconButton(icon=ft.Icons.REFRESH, tooltip=t.get("reload"), on_click=fetch_quests, icon_color="#5865F2")
@@ -291,7 +294,8 @@ def main(page: ft.Page):
         value="RU",
         width=120,
         bgcolor="#1E1F22",
-        border_color="#1E1F22"
+        border_color="#1E1F22",
+        on_change=change_lang
     )
     lang_dd.on_change = change_lang
     
@@ -358,7 +362,10 @@ def main(page: ft.Page):
         while True:
             time.sleep(1)
             if active_engines:
-                update_timers_logic()
+                try:
+                    update_timers_logic()
+                except Exception as e:
+                    log("log_spoof_fail_err", "Timer Loop", str(e))
                     
     threading.Thread(target=update_timers, daemon=True).start()
     
