@@ -366,4 +366,10 @@ def main(page: ft.Page):
 
 if __name__ == '__main__':
     check_cli()
-    ft.app(target=main, assets_dir=".")
+    import sys
+    import os
+    if getattr(sys, 'frozen', False):
+        assets_dir = sys._MEIPASS
+    else:
+        assets_dir = "."
+    ft.app(target=main, assets_dir=assets_dir)
