@@ -157,22 +157,16 @@ def main(page: ft.Page):
             
         if stopped_gids:
             render_active_games()
-            try:
-                active_list.update()
-                page.update()
-            except:
-                pass
-
         for c in active_list.controls:
             if isinstance(c, ft.Container) and isinstance(c.content, ft.Row) and len(c.content.controls) >= 2:
                 timer_txt = c.content.controls[1]
                 gid = timer_txt.data
                 if gid in active_engines:
                     timer_txt.value = active_engines[gid].get_runtime_str()
-                    try:
-                        timer_txt.update()
-                    except:
-                        pass
+        try:
+            page.update()
+        except:
+            pass
 
     def create_game_tile(game_meta, index):
         icon_src = game_meta.get("icon_url")
@@ -296,7 +290,7 @@ def main(page: ft.Page):
         bgcolor="#1E1F22",
         border_color="#1E1F22"
     )
-    lang_dd.on_change = change_lang
+    lang_dd.on_select = change_lang
     
     header = ft.Row([
         title_text,
