@@ -14,6 +14,7 @@ class Program {
         l.Top = 20;
         l.Left = 20;
         f.Controls.Add(l);
+        f.FormClosing += (s, e) => { Environment.Exit(0); };
         f.Show();
         Application.Run(f);
     }
