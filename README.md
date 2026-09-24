@@ -12,7 +12,7 @@ An experimental tool for parsing the Discord games database and running mock gam
 - **Language Support**: Full English and Russian localization.
 - **Full Database Support**: Search and spoof any of Discord's ~10,400+ registered PC games.
 
-## ⚠️ Disclaimer
+## Disclaimer
 **WARNING! READ BEFORE USE**
 
 This program is an experimental tool provided 'as is' exclusively for educational and research purposes.
@@ -49,7 +49,7 @@ Download the latest standalone executable for Windows/Linux from the [Releases](
 - **Поддержка языков**: Полная локализация на русский и английский.
 - **Полная база игр**: Поддержка всей базы данных ПК-игр Discord (более 10 400+ игр).
 
-## ⚠️ Важное уведомление (Disclaimer)
+## Важное уведомление (Disclaimer)
 **ВНИМАНИЕ! ПРОЧТИТЕ ПЕРЕД ИСПОЛЬЗОВАНИЕМ**
 
 Данная программа является экспериментальным инструментом и предоставляется «как есть» исключительно в образовательных и исследовательских целях.
